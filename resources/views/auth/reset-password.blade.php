@@ -5,10 +5,9 @@
 @section('content')
 <div class="w-full max-w-md">
 
-    {{-- Card --}}
     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
 
-        {{-- Card Header --}}
+        {{-- Header --}}
         <div class="bg-gradient-to-r from-[#50016e] to-[#7c24e0] px-8 py-8 text-center">
             <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,29 +19,13 @@
             <p class="text-white/70 mt-1 text-sm">Choose a strong new password</p>
         </div>
 
-        {{-- Card Body --}}
+        {{-- Body --}}
         <div class="px-8 py-8">
-
-            {{-- Validation Errors --}}
-            @if ($errors->any())
-                <div class="mb-6 px-4 py-3 bg-red-50 border border-red-200 rounded-lg">
-                    <ul class="text-sm text-red-600 space-y-1">
-                        @foreach ($errors->all() as $error)
-                            <li class="flex items-center gap-2">
-                                <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                                </svg>
-                                {{ $error }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
             <form method="POST" action="{{ route('auth-starter.password.update') }}" class="space-y-5">
                 @csrf
 
-                {{-- Hidden Token --}}
+                {{-- Hidden token --}}
                 <input type="hidden" name="token" value="{{ $token }}">
 
                 {{-- Email --}}
@@ -58,9 +41,18 @@
                         required
                         autocomplete="email"
                         autofocus
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:border-transparent transition-all @error('email') border-red-400 bg-red-50 @enderror"
                         placeholder="you@example.com"
+                        class="w-full px-4 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:border-transparent transition-all
+                            @error('email') border-red-400 bg-red-50 @else border-gray-300 @enderror"
                     >
+                    @error('email')
+                        <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- New Password --}}
@@ -74,9 +66,18 @@
                         name="password"
                         required
                         autocomplete="new-password"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:border-transparent transition-all @error('password') border-red-400 bg-red-50 @enderror"
                         placeholder="Min. 8 characters"
+                        class="w-full px-4 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:border-transparent transition-all
+                            @error('password') border-red-400 bg-red-50 @else border-gray-300 @enderror"
                     >
+                    @error('password')
+                        <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Confirm Password --}}
@@ -90,15 +91,26 @@
                         name="password_confirmation"
                         required
                         autocomplete="new-password"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:border-transparent transition-all @error('password_confirmation') border-red-400 bg-red-50 @enderror"
                         placeholder="Repeat new password"
+                        class="w-full px-4 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:border-transparent transition-all
+                            @error('password_confirmation') border-red-400 bg-red-50 @else border-gray-300 @enderror"
                     >
+                    @error('password_confirmation')
+                        <p class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 {{-- Submit --}}
                 <button
                     type="submit"
-                    class="w-full bg-gradient-to-r from-[#50016e] to-[#7c24e0] text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:from-[#3d0057] hover:to-[#6819ca] focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:ring-offset-2 transition-all transform hover:scale-[1.01] active:scale-[0.99]"
+                    class="w-full bg-gradient-to-r from-[#50016e] to-[#7c24e0] text-white py-2.5 px-4 rounded-lg font-semibold text-sm
+                           hover:from-[#3d0057] hover:to-[#6819ca] focus:outline-none focus:ring-2 focus:ring-[#7c24e0] focus:ring-offset-2
+                           transition-all transform hover:scale-[1.01] active:scale-[0.99]"
                 >
                     Reset password
                 </button>

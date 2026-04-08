@@ -40,11 +40,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Published File Names
+    |--------------------------------------------------------------------------
+    | These are set automatically by the installer and track what names the
+    | user chose for their published controller, middleware, routes file, and
+    | views directory.
+    */
+    'controller_name' => 'AuthController',
+    'middleware_name'  => 'AuthMiddleware',
+    'routes_file'      => 'auth',
+    'views_path'       => 'auth-starter',
+
+    /*
+    |--------------------------------------------------------------------------
     | View Overrides
     |--------------------------------------------------------------------------
-    | Customize which views are used for login and register pages.
+    | Customize which views are used for each auth page.
     */
-    'login_view'    => 'auth-starter::auth.login',
-    'register_view' => 'auth-starter::auth.register',
+    'login_view'            => 'auth-starter::auth.login',
+    'register_view'         => 'auth-starter::auth.register',
+    'forgot_password_view'  => 'auth-starter::auth.forgot-password',
+    'reset_password_view'   => 'auth-starter::auth.reset-password',
+    'dashboard_view'        => 'auth-starter::dashboard',
 
 ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Deixtra\LaravelStarterAuth;
 
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\ServiceProvider;
 use Deixtra\LaravelStarterAuth\Console\InstallCommand;
 
@@ -25,6 +26,14 @@ class AuthStarterServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
+        // Ensure $errors is always available in all package views
+        view()->composer('auth-starter::*', function ($view): void {
+            $data = $view->getData();
+            if (! isset($data['errors'])) {
+                $view->with('errors', session('errors', new MessageBag()));
+            }
+        });
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
@@ -41,6 +50,14 @@ class AuthStarterServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../database/migrations' => database_path('migrations'),
             ], 'auth-starter-migrations');
+
+            $this->publishes([
+                __DIR__ . '/Http/Controllers' => app_path('Http/Controllers'),
+            ], 'auth-starter-controllers');
+
+            $this->publishes([
+                __DIR__ . '/Http/Middleware' => app_path('Http/Middleware'),
+            ], 'auth-starter-middleware');
         }
     }
 }

@@ -12,8 +12,9 @@ class DashboardController extends Controller
 {
     public function index(Request $request): View
     {
-        return view('auth-starter::dashboard', [
-            'user' => $request->user(),
-        ]);
+        return view(
+            config('auth-starter.dashboard_view', 'auth-starter::dashboard'),
+            ['user' => $request->user()]
+        );
     }
 }

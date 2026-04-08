@@ -17,7 +17,7 @@ class PasswordResetController extends Controller
 {
     public function showForgotForm(): View
     {
-        return view('auth-starter::auth.forgot-password');
+        return view(config('auth-starter.forgot_password_view', 'auth-starter::auth.forgot-password'));
     }
 
     public function sendResetLink(Request $request): RedirectResponse
@@ -39,7 +39,7 @@ class PasswordResetController extends Controller
 
     public function showResetForm(Request $request, string $token): View
     {
-        return view('auth-starter::auth.reset-password', [
+        return view(config('auth-starter.reset_password_view', 'auth-starter::auth.reset-password'), [
             'token' => $token,
             'email' => $request->string('email')->toString(),
         ]);

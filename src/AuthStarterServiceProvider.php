@@ -22,12 +22,24 @@ class AuthStarterServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
 
+        // Published views take priority; package views are the fallback.
+        $publishedViewsPath = resource_path('views/vendor/auth-starter');
+
+        if (is_dir($publishedViewsPath)) {
+            $this->loadViewsFrom($publishedViewsPath, 'auth-starter');
+        }
+
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'auth-starter');
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-      
-      
+        // Ensure $errors is always a MessageBag inside every package view.
+        view()->composer('auth-starter::*', function ($view): void {
+            $data = $view->getData();
+            if (! isset($data['errors'])) {
+                $view->with('errors', session('errors', new MessageBag()));
+            }
+        });
 
         if ($this->app->runningInConsole()) {
             $this->commands([

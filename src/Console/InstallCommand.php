@@ -506,22 +506,24 @@ PHP;
     private function includeRoutesFile(): void
     {
         $webRoutesPath = base_path('routes/web.php');
-        $requireLine   = "require __DIR__.'/{$this->routesFileName}.php';";
 
         if (! File::exists($webRoutesPath)) {
             $this->warn('⚠️  routes/web.php not found. Include your routes file manually.');
             return;
         }
 
+        // Use a single canonical form for both the check and the append.
+        $requireLine = "\nrequire __DIR__.'/{$this->routesFileName}.php';";
+
         $content = File::get($webRoutesPath);
 
-        if (str_contains($content, $this->routesFileName . '.php')) {
+        if (str_contains($content, "{$this->routesFileName}.php'")) {
             $this->line("⏭️  Routes file already included in routes/web.php");
             return;
         }
 
-        File::append($webRoutesPath, "\n\n" . $requireLine . "\n");
-        $this->line("✅ Routes file included in routes/web.php");
+        File::append($webRoutesPath, $requireLine . "\n");
+        $this->line("✅ Routes require added to routes/web.php");
     }
 
     // ─────────────────────────────────────────────────────────────────────────

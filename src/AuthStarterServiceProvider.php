@@ -26,13 +26,8 @@ class AuthStarterServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        // Ensure $errors is always available in all package views
-        view()->composer('auth-starter::*', function ($view): void {
-            $data = $view->getData();
-            if (! isset($data['errors'])) {
-                $view->with('errors', session('errors', new MessageBag()));
-            }
-        });
+      
+      
 
         if ($this->app->runningInConsole()) {
             $this->commands([

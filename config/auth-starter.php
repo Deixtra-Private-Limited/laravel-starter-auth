@@ -57,10 +57,10 @@ return [
     |--------------------------------------------------------------------------
     | Customize which views are used for each auth page.
     */
-    'login_view'            => 'auth-starter::auth.login',
-    'register_view'         => 'auth-starter::auth.register',
-    'forgot_password_view'  => 'auth-starter::auth.forgot-password',
-    'reset_password_view'   => 'auth-starter::auth.reset-password',
-    'dashboard_view'        => 'auth-starter::dashboard',
+    'login_view'            => 'auth.login',
+    'register_view'         => 'auth.register',
+    'forgot_password_view'  => 'auth.forgot-password',
+    'reset_password_view'   => 'auth.reset-password',
+    'dashboard_view'        => 'dashboard',
 
 ];

@@ -33,22 +33,16 @@ class AuthStarterServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        // Ensure $errors is always a MessageBag inside every package view.
-        view()->composer('auth-starter::*', function ($view): void {
-            $data = $view->getData();
-            if (! isset($data['errors'])) {
-                $view->with('errors', session('errors', new MessageBag()));
-            }
-        });
+        
 
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
             ]);
 
-            $this->publishes([
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/auth-starter'),
-            ], 'auth-starter-views');
+           $this->publishes([
+    __DIR__ . '/../resources/views' => resource_path('views'),
+], 'auth-starter-views');
 
             $this->publishes([
                 __DIR__ . '/../config/auth-starter.php' => config_path('auth-starter.php'),
